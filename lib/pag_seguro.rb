@@ -6,6 +6,7 @@ require "time"
 require "bigdecimal"
 require "httparty"
 
+
 module PagSeguro
   GATEWAY_URL = "https://ws.pagseguro.uol.com.br/v2/checkout"
   GATEWAY_PAYMENT_URL = "https://pagseguro.uol.com.br/v2/checkout/payment.html"
@@ -131,9 +132,15 @@ module PagSeguro
     def developer?
       config? && config["developer"] == true
     end
+
+    def prepare(billing, items, options)
+      xml = PagApi.prepare_xml(billing, items)
+      PagApi.remote_rpc(xml, options)
+    end
+
   end
 end
-
+require 'pag_seguro/pag_api'
 require 'pag_seguro/engine'
 require "pag_seguro/faker"
 require "pag_seguro/rake"
