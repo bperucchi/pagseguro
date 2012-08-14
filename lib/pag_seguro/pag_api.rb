@@ -9,6 +9,7 @@ module PagSeguro
         builder = Nokogiri::XML::Builder.new(:encoding => 'ISO-8859-1') do |xml|
           xml.checkout {
             xml.items
+            xml.redirectURL { xml.text billing[:redirectURL]}
             xml.currency  { xml.text billing[:currency] }
             xml.reference { xml.text billing[:id] }
             xml.sender {
