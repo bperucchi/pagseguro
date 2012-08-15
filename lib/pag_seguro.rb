@@ -138,6 +138,10 @@ module PagSeguro
       PagApi.remote_rpc(xml, options)
     end
 
+    def notification_rpc(options)
+      PagApi.notification_rpc(options)
+    end
+
   end
 end
 require 'pag_seguro/pag_api'
