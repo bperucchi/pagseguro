@@ -47,7 +47,7 @@ module PagSeguro
       def notification_rpc(options)
         include HTTParty
         base_uri 'https://ws.pagseguro.uol.com.br/v2/transactions/notifications'
-        response = post("/#{options[:notificationCode]}?email=#{options[:client_id]}&token=#{options[:token]}")
+        response = get("/#{options[:notificationCode]}?email=#{options[:client_id]}&token=#{options[:token]}")
       end
 
       def remote_rpc(xml = nil, options)
