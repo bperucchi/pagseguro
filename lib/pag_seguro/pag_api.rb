@@ -8,7 +8,7 @@ module PagSeguro
       def prepare_xml(billing, items)
         builder = Nokogiri::XML::Builder.new(:encoding => 'ISO-8859-1') do |xml|
           xml.checkout {
-            xml.items
+            xml.items 
             xml.redirectURL { xml.text billing[:redirectURL]}
             xml.currency  { xml.text billing[:currency] }
             xml.reference { xml.text billing[:id] }
@@ -37,9 +37,17 @@ module PagSeguro
               xml.description { xml.text item[:description] }
               xml.amount { xml.text item[:amount] }
               xml.quantity { xml.text item[:quantity] }
-              xml.shippingCost { xml.text item[:shippingCost] }
             }
           end
+        end
+        node =  builder.doc.xpath('//checkout/items').first
+        Nokogiri::XML::Builder.with(node) do |xml|
+          xml.item{
+            xml.id { xml.text "999" }
+            xml.description { xml.text "Frete" }
+            xml.amount { xml.text billing[:shippingCost] }
+            xml.quantity { xml.text "1" }
+          }
         end
         builder.to_xml
       end
