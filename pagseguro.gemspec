@@ -3,7 +3,7 @@ $:.push File.expand_path("../lib", __FILE__)
 require "pag_seguro/version"
 
 Gem::Specification.new do |s|
-  s.name        = "pag_seguro"
+  s.name        = "pagseguro"
   s.version     = PagSeguro::Version::STRING
   s.platform    = Gem::Platform::RUBY
   s.authors     = ["Thiago Brandão Damasceno"]
