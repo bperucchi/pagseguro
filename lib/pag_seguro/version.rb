@@ -1,8 +1,5 @@
 module PagSeguro
   module Version
-    MAJOR = 0
-    MINOR = 1
-    PATCH = 17
-    STRING = "#{MAJOR}.#{MINOR}.#{PATCH}"
+    VERSION = "0.1.17"  
   end
 end
