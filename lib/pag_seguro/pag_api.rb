@@ -17,11 +17,11 @@ module PagSeguro
               xml.email { xml.text billing[:email] }
             }
             xml.shipping{
-              xml.type_ billing[:shippingId]
+              xml.type { xml.text billing[:shippingType] }
               xml.address{
                 xml.street { xml.text billing[:street] }
                 xml.complement { xml.text billing[:complement] }
-                xml.postalCode { xml.text billing[:zip_code] }
+                xml.postalCode { xml.text billing[:postalCode] }
                 xml.city { xml.text billing[:city] }
                 xml.state { xml.text billing[:state] }
                 xml.country { xml.text billing[:country] }
@@ -40,14 +40,16 @@ module PagSeguro
             }
           end
         end
-        node =  builder.doc.xpath('//checkout/items').first
-        Nokogiri::XML::Builder.with(node) do |xml|
-          xml.item{
-            xml.id { xml.text "999" }
-            xml.description { xml.text "Frete" }
-            xml.amount { xml.text billing[:shippingCost] }
-            xml.quantity { xml.text "1" }
-          }
+        unless billing[:shippingCost].to_f == 0
+          node =  builder.doc.xpath('//checkout/items').first
+          Nokogiri::XML::Builder.with(node) do |xml|
+            xml.item{
+              xml.id { xml.text "999" }
+              xml.description { xml.text "Frete" }
+              xml.amount { xml.text billing[:shippingCost] }
+              xml.quantity { xml.text "1" }
+            }
+          end
         end
         builder.to_xml
       end
